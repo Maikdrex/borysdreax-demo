@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Configurador de Avatar BX</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Model Viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: #00ffc8;
+    }
+
+    .viewer-container {
+      position: relative;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    model-viewer {
+      width: 100%;
+      max-width: 750px;
+      height: 500px;
+      background: #111;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Logo BX sobre la camiseta (superposición 2D simulada) */
+    .logo-overlay {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .panel {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+      max-width: 750px;
+      width: 90%;
+    }
+
+    .panel h2 {
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      color: #00ffc8;
+    }
+
+    .control-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 4px;
+      background: #333;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #00ffc8;
+      cursor: pointer;
+      box-shadow: 0 0 6px #00ffc8;
+    }
+
+    footer {
+      margin: 20px;
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>👕 Configurador de Avatar BX</h1>
+  </header>
+
+  <div class="viewer-container">
+    <model-viewer id="avatar"
+      src="avatar_con_prenda.glb"
+      alt="Avatar 3D BX"
+      auto-rotate
+      camera-controls
+      ar
+      ar-modes="scene-viewer webxr quick-look">
+    </model-viewer>
+
+    <!-- Logo BX flotante -->
+    <img src="1e40d1fb-6637-44ea-9d3e-30a584669561.png" alt="Logo BX" class="logo-overlay">
+  </div>
+
+  <!-- Panel de control -->
+  <div class="panel">
+    <h2>📏 Medidas del Avatar (en cm)</h2>
+
+    <div class="control-group">
+      <label>Altura total: <span id="alturaVal">170</span> cm</label>
+      <input type="range" id="altura" min="150" max="200" step="1" value="170">
+    </div>
+
+    <div class="control-group">
+      <label>Ancho de hombros: <span id="hombrosVal">45</span> cm</label>
+      <input type="range" id="hombros" min="35" max="60" step="1" value="45">
+    </div>
+
+    <div class="control-group">
+      <label>Ancho de caderas: <span id="caderasVal">40</span> cm</label>
+      <input type="range" id="caderas" min="30" max="60" step="1" value="40">
+    </div>
+
+    <div class="control-group">
+      <label>Tamaño de cabeza: <span id="cabezaVal">23</span> cm</label>
+      <input type="range" id="cabeza" min="18" max="30" step="1" value="23">
+    </div>
+
+    <h2>🔄 Rotación</h2>
+    <div class="control-group">
+      <label>Rotación Y: <span id="rotYVal">0</span>°</label>
+      <input type="range" id="rotY" min="0" max="360" step="5" value="0">
+    </div>
+  </div>
+
+  <footer>
+    Desarrollado por <strong>@maikdrex</strong> con GitHub Pages 🚀
+  </footer>
+
+  <script>
+    const avatar = document.getElementById("avatar");
+
+    // Altura
+    const altura = document.getElementById("altura");
+    const alturaVal = document.getElementById("alturaVal");
+    altura.addEventListener("input", () => {
+      alturaVal.textContent = altura.value;
+      const scale = altura.value / 170;
+      avatar.scale = `${scale} ${scale} ${scale}`;
+    });
+
+    // Hombros (X)
+    const hombros = document.getElementById("hombros");
+    const hombrosVal = document.getElementById("hombrosVal");
+    hombros.addEventListener("input", () => {
+      hombrosVal.textContent = hombros.value;
+      const scale = hombros.value / 45;
+      avatar.scale = `${scale} ${avatar.scale.split(" ")[1]} ${avatar.scale.split(" ")[2]}`;
+    });
+
+    // Caderas (Z)
+    const caderas = document.getElementById("caderas");
+    const caderasVal = document.getElementById("caderasVal");
+    caderas.addEventListener("input", () => {
+      caderasVal.textContent = caderas.value;
+      const scale = caderas.value / 40;
+      avatar.scale = `${avatar.scale.split(" ")[0]} ${avatar.scale.split(" ")[1]} ${scale}`;
+    });
+
+    // Cabeza (simulación: escala uniforme rápida)
+    const cabeza = document.getElementById("cabeza");
+    const cabezaVal = document.getElementById("cabezaVal");
+    cabeza.addEventListener("input", () => {
+      cabezaVal.textContent = cabeza.value;
+      // ⚠️ En realidad necesitarías separar el mesh de la cabeza en Blender
+      // Aquí solo hago un zoom leve general para simular
+      const scale = cabeza.value / 23;
+      avatar.scale = `${scale} ${scale} ${scale}`;
+    });
+
+    // Rotación Y
+    const rotY = document.getElementById("rotY");
+    const rotYVal = document.getElementById("rotYVal");
+    rotY.addEventListener("input", () => {
+      rotYVal.textContent = rotY.value;
+      avatar.rotation = `0 ${rotY.value} 0`;
+    });
+  </script>
+</body>
+</html>
