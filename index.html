@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Borysdreax - Probador Virtual</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style> 
+      body{font-family:Arial,Helvetica,sans-serif;padding:10px;} 
+      model-viewer{width:100%;height:70vh;} 
+    </style>
+  </head>
+  <body>
+    <h1>Borysdreax — Probador Virtual (MVP)</h1>
+    <p>Gira el modelo con el ratón o usa el botón de AR en móvil (Android soportado).</p>
+    <model-viewer 
+      src="avatar_con_prenda.glb" 
+      alt="Avatar con prenda" 
+      camera-controls 
+      auto-rotate 
+      exposure="1" 
+      ar 
+      ar-modes="webxr scene-viewer quick-look"
+      style="border:1px solid #ddd;">
+    </model-viewer>
+  </body>
+</html>
