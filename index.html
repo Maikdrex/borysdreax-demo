@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Avatar Editable</title>
+
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 { margin: 20px; color: #00ffc8; }
+
+    model-viewer {
+      width: 100%;
+      max-width: 700px;
+      height: 500px;
+      background-color: #111;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(0, 255, 200, 0.6);
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      margin-left: 10px;
+    }
+
+    .bx-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      font-weight: 800;
+      color: rgba(0,255,200,0.8);
+      text-shadow: 2px 2px 5px #000;
+      pointer-events: none; /* no interfiere con clicks */
+    }
+
+    .viewer-container {
+      position: relative;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <h1>👕 Avatar Editable</h1>
+
+  <div class="viewer-container">
+    <model-viewer id="avatar"
+      src="avatar_con_prenda.glb"
+      alt="Avatar 3D con prenda"
+      auto-rotate
+      camera-controls
+      ar
+      ar-modes="scene-viewer webxr quick-look"
+      exposure="1">
+    </model-viewer>
+
+    <!-- Texto BX flotante (simulación de logo en la camisa) -->
+    <div class="bx-label">BX</div>
+  </div>
+
+  <!-- Controles -->
+  <div class="controls">
+    <label>Escala:
+      <input type="range" id="scaleControl" min="0.5" max="2" step="0.1" value="1">
+    </label>
+
+    <label>Rotación Y:
+      <input type="range" id="rotateY" min="0" max="360" step="5" value="0">
+    </label>
+
+    <label>Zoom cámara:
+      <input type="range" id="zoomControl" min="20" max="120" step="5" value="45">
+    </label>
+  </div>
+
+  <script>
+    const avatar = document.getElementById("avatar");
+    const scaleControl = document.getElementById("scaleControl");
+    const rotateY = document.getElementById("rotateY");
+    const zoomControl = document.getElementById("zoomControl");
+
+    // Escala del modelo
+    scaleControl.addEventListener("input", () => {
+      const s = scaleControl.value;
+      avatar.scale = `${s} ${s} ${s}`;
+    });
+
+    // Rotación Y
+    rotateY.addEventListener("input", () => {
+      const r = rotateY.value;
+      avatar.rotation = `0 ${r} 0`;
+    });
+
+    // Zoom cámara
+    zoomControl.addEventListener("input", () => {
+      const z = zoomControl.value;
+      avatar.setAttribute("camera-orbit", `0deg 75deg ${z}%`);
+    });
+  </script>
+
+</body>
+</html>
