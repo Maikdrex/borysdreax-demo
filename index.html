@@ -1,27 +1,140 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>Borysdreax - Probador Virtual</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <style> 
-      body{font-family:Arial,Helvetica,sans-serif;padding:10px;} 
-      model-viewer{width:100%;height:70vh;} 
-    </style>
-  </head>
-  <body>
-    <h1>Borysdreax — Probador Virtual (MVP)</h1>
-    <p>Gira el modelo con el ratón o usa el botón de AR en móvil (Android soportado).</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Demo de Avatar 3D</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Modelo 3D con <model-viewer> -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <!-- Estilos -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      background: rgba(0,0,0,0.4);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #00ffc8;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      width: 100%;
+    }
+
+    model-viewer {
+      width: 100%;
+      max-width: 700px;
+      height: 500px;
+      background-color: #111;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(0, 255, 200, 0.6);
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background: #00ffc8;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #00bfa5;
+      transform: scale(1.05);
+    }
+
+    .card {
+      max-width: 600px;
+      padding: 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    footer {
+      padding: 15px;
+      text-align: center;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header>
+    <h1>👕 Vista previa del Avatar 3D</h1>
+  </header>
+
+  <!-- Contenido principal -->
+  <main>
     <model-viewer 
       src="avatar_con_prenda.glb" 
-      alt="Avatar con prenda" 
-      camera-controls 
+      alt="Avatar 3D con prenda"
       auto-rotate 
-      exposure="1" 
+      camera-controls 
       ar 
-      ar-modes="webxr scene-viewer quick-look"
-      style="border:1px solid #ddd;">
+      ar-modes="scene-viewer webxr quick-look">
     </model-viewer>
-  </body>
+
+    <div class="controls">
+      <button class="btn" onclick="document.querySelector('model-viewer').resetTurntableRotation()">🔄 Reiniciar rotación</button>
+      <button class="btn" onclick="document.querySelector('model-viewer').activateAR()">📱 Ver en AR</button>
+    </div>
+
+    <div class="card">
+      <h2>👗 Detalles del Avatar</h2>
+      <p>Este avatar está diseñado con una prenda personalizada.  
+      Puedes girarlo con el ratón en PC o con el dedo en móvil.  
+      Además, activa el modo AR para verlo en tu espacio real.</p>
+    </div>
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    Subido por <strong>@maikdrex</strong> con GitHub Pages 🚀
+  </footer>
+
+</body>
 </html>
